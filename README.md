@@ -2,6 +2,8 @@
 
 Dim-to-warm light control for Home Assistant -- dim like halogen: dark = warm white, bright = cool white, with adjustable curve.
 
+![Dashboard card](screenshot.png)
+
 ## Concept
 
 Halogen and incandescent bulbs naturally get warmer when dimmed. LED panels with tunable white can't do this on their own. This solution replicates that behavior through Home Assistant:
