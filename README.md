@@ -23,18 +23,18 @@ kelvin = warm + ((brightness / 100) ^ exponent) * (cool - warm)
 | Exponent | Behavior |
 |---|---|
 | 1.0 | Linear (even rise) |
-| 2.0 | Quadratic (stays warm longer) |
-| **3.0** | **Cubic (halogen feel, recommended)** |
+| **2.0** | **Quadratic (halogen feel, recommended)** |
+| 3.0 | Cubic (stays warm even longer) |
 | 4.0 | Very long warm, steep rise at the end |
 
-Example with exponent 3.0, warm=2200K, cool=6000K:
+Example with exponent 2.0, warm=2000K, cool=6000K:
 
 | Brightness | Color temperature |
 |---|---|
-| 1% | 2200K |
-| 25% | 2240K |
-| 50% | 2675K |
-| 75% | 3800K |
+| 1% | 2000K |
+| 25% | 2250K |
+| 50% | 3000K |
+| 75% | 4250K |
 | 100% | 6000K |
 
 ## Requirements
@@ -63,7 +63,7 @@ input_number:
     name: Warm (min)
     min: 2000
     max: 4000
-    initial: 2200
+    initial: 2000
     step: 100
     unit_of_measurement: "K"
     icon: mdi:thermometer-low
@@ -79,7 +79,7 @@ input_number:
     name: Curve
     min: 1.0
     max: 4.0
-    initial: 3.0
+    initial: 2.0
     step: 0.5
     icon: mdi:chart-bell-curve-cumulative
 ```
@@ -173,7 +173,7 @@ Using the [Custom 5-Button Blueprint](https://github.com/niro1987/homeassistant-
             target:
               entity_id: input_number.dim_to_warm_brightness
             data:
-              value: "{{ [states('input_number.dim_to_warm_brightness') | float + 5, 100] | min }}"
+              value: "{{ [states('input_number.dim_to_warm_brightness') | float + 2, 100] | min }}"
           - delay:
               milliseconds: 50
       dimdown_short:
@@ -190,7 +190,7 @@ Using the [Custom 5-Button Blueprint](https://github.com/niro1987/homeassistant-
             target:
               entity_id: input_number.dim_to_warm_brightness
             data:
-              value: "{{ [states('input_number.dim_to_warm_brightness') | float - 5, 1] | max }}"
+              value: "{{ [states('input_number.dim_to_warm_brightness') | float - 2, 1] | max }}"
           - delay:
               milliseconds: 50
 ```
@@ -201,10 +201,10 @@ Using the [Custom 5-Button Blueprint](https://github.com/niro1987/homeassistant-
 
 ## Tuning tips
 
-- **Exponent 3.0** is closest to the halogen feel
-- **Warm endpoint**: 2200K for candlelight, 2700K for classic warm white
+- **Exponent 2.0** is closest to the halogen feel
+- **Warm endpoint**: 2000K for deep candlelight, 2700K for classic warm white
 - **Cool endpoint**: 4000K for subtle daylight, 6000K for full range
-- **Long-press speed**: 50ms delay at 5% steps gives fast, smooth dimming
+- **Long-press speed**: 50ms delay at 2% steps gives smooth, analog-feeling dimming. Short press at 5% for quick jumps.
 
 ## License
 
